@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-white">
+        <div class="d-flex justify-content-between">
+            <h4 class="mb-0">Your Expenses</h4>
+            <a href="{% url 'add_expense' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> Add New
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Filter Form -->
+        <form class="row g-3 mb-4">
+            <div class="col-md-3">
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    {% for value, name in categories %}
+                    <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-outline-secondary w-100">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Spending</h6>
+                        <h4 class="card-text">${{ total|intcomma }}</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more summary cards if needed -->
+        </div>
+
+        <!-- Expenses Table -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.date|date:"M d, Y" }}</td>
+                        <td><span class="badge bg-primary">{{ expense.get_category_display }}</span></td>
+                        <td class="fw-bold">${{ expense.amount }}</td>
+                        <td>{{ expense.description|truncatechars:30 }}</td>
+                        <td>
+                            <a href="{% url 'edit_expense' expense.id %}" class="btn btn-sm btn-outline-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'delete_expense' expense.id %}" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card shadow mt-4" style="max-width: 450px; margin:0 auto;" >
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Spending Breakdown</h5>
+    </div>
+    <div class="card-body">
+        <canvas id="categoryChart" height="200"></canvas>
+    </div>
+    
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ category_labels|safe }},
+                datasets: [{
+                    data: {{ category_data|safe }},
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+                    ]
+                }]
+            },
+            options: { responsive: true }
+        });
+    });
+</script>
+{% endblock %}

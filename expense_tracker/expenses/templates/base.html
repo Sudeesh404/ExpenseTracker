@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expense Tracker</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'expense_tracker/css/style.css' %}">
+</head>
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'expense_list' %}">
+                <i class="fas fa-wallet me-2"></i>Expense Tracker
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="{% url 'add_expense' %}"><i class="fas fa-plus-circle me-1"></i>Add Expense</a>
+                {% comment %} <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a> {% endcomment %}
+                <a href="{% url 'logout' %}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </a>
+                
+                <!-- Hidden form that actually does the logout -->
+                <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS + Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

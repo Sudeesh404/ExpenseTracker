@@ -5,12 +5,12 @@ class Expense(models.Model):
     CATEGORIES = [
         ('FOOD', 'Food'),
         ('TRANSPORTATION', 'Transportation'),
-        ('BILLS','Bills')
+        ('BILLS','Bills'),
         ('ENTERTAINMENT', 'Entertainment'),
         ('OTHER','Other'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=1, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=20, choices=CATEGORIES)
     description = models.TextField()
     date = models.DateField(auto_now_add=True)
