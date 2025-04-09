@@ -37,4 +37,18 @@ body {
 /* Small text styling */
 .small {
     font-size: 0.85rem;
+}/* Make form controls more compact */
+.form-control-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Reduce card shadow intensity */
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075) !important;
+}
+
+/* Compact card body */
+.card-body {
+    padding: 1rem !important;
 }
