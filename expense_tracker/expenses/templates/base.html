@@ -22,6 +22,11 @@
             <div class="navbar-nav">
                 <a class="nav-link" href="{% url 'add_expense' %}"><i class="fas fa-plus-circle me-1"></i>Add Expense</a>
                 {% comment %} <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a> {% endcomment %}
+                <div class="navbar-nav ms-auto">
+                    <!-- Help Button -->
+                    <a class="nav-link" href="{% static 'expenses/docs/SpendWise_UserManual.pdf' %}" target="_blank">
+                      <i class="fas fa-question-circle me-1"></i> Help
+                    </a>
                 <a href="{% url 'logout' %}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt me-1"></i> Logout
                 </a>
