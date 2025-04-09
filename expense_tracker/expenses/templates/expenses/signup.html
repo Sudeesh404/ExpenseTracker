@@ -1,11 +1,87 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-lg mt-5">
+                <!-- Logo Section -->
+                <div class="text-center mt-4">
+                    <img src="{% static 'expenses/images/Logo.jpg' %}" 
+                         alt="Expense Tracker Logo" 
+                         class="img-fluid" 
+                         style="max-height: 80px;">
+                    <h2 class="mt-3">Create Account</h2>
+                </div>
+
+                <!-- Signup Form -->
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Username Field -->
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="id_username"
+                                   name="username"
+                                   required
+                                   placeholder="Enter username">
+                            <small class="text-muted">150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+                        </div>
+                        
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">Password</label>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="id_password1"
+                                   name="password1"
+                                   required
+                                   placeholder="Create password">
+                        </div>
+                        
+                        <!-- Password Confirmation -->
+                        <div class="mb-4">
+                            <label for="id_password2" class="form-label">Confirm Password</label>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="id_password2"
+                                   name="password2"
+                                   required
+                                   placeholder="Repeat password">
+                        </div>
+                        
+                        <!-- Password Requirements (Collapsible) -->
+                        <div class="alert alert-light mb-4">
+                            <a class="text-primary" data-bs-toggle="collapse" href="#passwordRules" role="button">
+                                <i class="fas fa-info-circle"></i> Password requirements
+                            </a>
+                            <div class="collapse mt-2" id="passwordRules">
+                                <ul class="small text-muted">
+                                    <li>Minimum 8 characters</li>
+                                    <li>Can't be too similar to username</li>
+                                    <li>Can't be entirely numeric</li>
+                                    <li>Can't be commonly used</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fas fa-user-plus me-2"></i> Sign Up
+                        </button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Already have an account? 
+                            <a href="{% url 'login' %}">Log In</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
